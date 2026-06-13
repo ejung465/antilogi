@@ -1,0 +1,74 @@
+{
+  "name": "antilogi",
+  "version": "0.1.0",
+  "description": "Local-first Logitech M720 Triathlon gesture-button remapper for macOS media controls (HID++ 2.0, no Logi Options+)",
+  "main": "out/main/index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "npm run build:helper && electron-vite dev",
+    "start": "electron-vite preview",
+    "build": "npm run build:helper && npm run typecheck && electron-vite build",
+    "build:helper": "node scripts/build-helper.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p src/renderer/tsconfig.json",
+    "probe": "node scripts/probe.mjs",
+    "build:mac": "npm run build && electron-builder --mac --arm64",
+    "setup:permissions": "node scripts/setup-permissions-module.mjs",
+    "postinstall": "node scripts/setup-permissions-module.mjs"
+  },
+  "build": {
+    "appId": "dev.local.antilogi",
+    "productName": "AntiLogi",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**"
+    ],
+    "extraResources": [
+      {
+        "from": "native/build/antilogi-hid-helper",
+        "to": "antilogi-hid-helper"
+      }
+    ],
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "npmRebuild": false,
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "identity": null,
+      "category": "public.app-category.utilities",
+      "extendInfo": {
+        "NSBluetoothAlwaysUsageDescription": "AntiLogi talks to the M720 over Bluetooth to remap the gesture button to media controls.",
+        "NSBluetoothPeripheralUsageDescription": "AntiLogi talks to the M720 over Bluetooth to remap the gesture button to media controls."
+      }
+    }
+  },
+  "dependencies": {
+    "node-hid": "^3.3.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "optionalDependencies": {
+    "node-mac-permissions": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "^42.4.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "typescript": "^6.0.3",
+    "vite": "^7.3.5"
+  }
+}

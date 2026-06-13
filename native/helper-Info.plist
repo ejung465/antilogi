@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key>
+  <string>antilogi-hid-helper</string>
+  <key>CFBundleIdentifier</key>
+  <string>dev.local.antilogi.hidhelper</string>
+  <key>CFBundleVersion</key>
+  <string>1</string>
+  <key>NSBluetoothAlwaysUsageDescription</key>
+  <string>AntiLogi talks to the M720 over Bluetooth to remap the gesture button to media controls.</string>
+  <key>NSBluetoothPeripheralUsageDescription</key>
+  <string>AntiLogi talks to the M720 over Bluetooth to remap the gesture button to media controls.</string>
+</dict>
+</plist>
