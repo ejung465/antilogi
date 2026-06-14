@@ -62,15 +62,20 @@ export class MediaController {
 
   async perform(action: MediaAction): Promise<void> {
     if (action === 'none') return
-    if (this.deps.isAccessibilityGranted() && this.daemon.send(NX_CODES[action])) {
-      this.deps.onFired({ action, via: 'media-keys', at: Date.now() })
-      return
-    }
+    // Always run AppleScript — it's reliable on macOS 26 regardless of whether
+    // NX CGEventPost events are delivered. NX keys are attempted first as a
+    // best-effort for apps beyond Spotify/Music, but AppleScript is the ground truth.
+    const nxSent = this.deps.isAccessibilityGranted() && this.daemon.send(NX_CODES[action])
     try {
       await this.runAppleScript(APPLESCRIPT_FALLBACKS[action])
-      this.deps.onFired({ action, via: 'applescript', at: Date.now() })
+      this.deps.onFired({ action, via: nxSent ? 'media-keys' : 'applescript', at: Date.now() })
     } catch (err) {
-      this.deps.log('error', `media action "${action}" failed: ${(err as Error).message}`)
+      if (nxSent) {
+        // NX fired and AppleScript failed (e.g. no Spotify/Music running) — still OK
+        this.deps.onFired({ action, via: 'media-keys', at: Date.now() })
+      } else {
+        this.deps.log('error', `media action "${action}" failed: ${(err as Error).message}`)
+      }
     }
   }
 

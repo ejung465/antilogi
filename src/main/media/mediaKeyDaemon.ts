@@ -13,10 +13,10 @@ function tap(code) {
   function ev(down) {
     var data1 = (code << 16) | ((down ? 0x0a : 0x0b) << 8);
     return $.NSEvent.otherEventWithTypeLocationModifierFlagsTimestampWindowNumberContextSubtypeData1Data2(
-      14, {x: 0, y: 0}, down ? 0x0a00 : 0x0b00, 0, 0, 0, 8, data1, -1);
+      14, {x: 0, y: 0}, 0, 0, 0, 0, 8, data1, -1);
   }
-  $.CGEventPost(0, ev(true).CGEvent);
-  $.CGEventPost(0, ev(false).CGEvent);
+  $.CGEventPost(4, ev(true).CGEvent);
+  $.CGEventPost(4, ev(false).CGEvent);
 }
 var stdin = $.NSFileHandle.fileHandleWithStandardInput;
 while (true) {
