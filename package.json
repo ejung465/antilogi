@@ -44,7 +44,7 @@
           ]
         }
       ],
-      "identity": null,
+      "identity": "AntiLogi Dev Signing",
       "category": "public.app-category.utilities",
       "extendInfo": {
         "NSBluetoothAlwaysUsageDescription": "AntiLogi talks to the M720 over Bluetooth to remap the gesture button to media controls.",

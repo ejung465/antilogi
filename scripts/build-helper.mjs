@@ -47,8 +47,7 @@ try {
     ],
     { cwd: root, stdio: 'inherit' }
   )
-  // Ad-hoc sign so the embedded entitlements/plist are honored.
-  execFileSync('codesign', ['--force', '--sign', '-', out], { cwd: root, stdio: 'inherit' })
+  execFileSync('codesign', ['--force', '--sign', 'AntiLogi Dev Signing', out], { cwd: root, stdio: 'inherit' })
   console.log(`[build-helper] OK → ${out}`)
 } catch (err) {
   console.error(`[build-helper] FAILED: ${err.message}`)
